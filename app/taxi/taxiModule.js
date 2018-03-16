@@ -1,1 +1,1 @@
-﻿angular.module("myTaxi", [])
+﻿angular.module("taxiModule", [])

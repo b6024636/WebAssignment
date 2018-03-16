@@ -1,86 +1,79 @@
-﻿app.controller("taxiController", function ($scope, $http)
-{
-    //An array that stores the taxi details
-    $scope.taxis = [
-        {
-            Id: 1,
-            Make: "Toyota",
-            Capacity: "3",
-            Driver: "John Doe",
-            Registration: "PR1US",
-            Model: "Prius",
-        },
-        {
-            Id: 2,
-            Make: "Ford",
-            Capacity: "5",
-            Driver: "Dohn Joe",
-            Registration: "FRDKA",
-            Model: "Ka",
-        },
-        {
-            Id: 3,
-            Make: "Tesla",
-            Capacity: 3,
-            Driver: "John Doe",
-            Registration: "D03",
-            Model: "Model 3"
-        }
-    ];
-
-    $scope.init = function () {
+﻿angular.module("taxiModule").controller("taxiController", function ($scope, $http) {
+    //Sets up the taxis array
+    $scope.vehicles = [];
+	
+	$scope.showHomeNavigation = true;
+	
+	
+    //Gets the taxis from the url and populates the array, or error
+    $scope.loadData = function () {
         $http.get("http://webteach_net.hallam.shu.ac.uk/acesjas/api/vehicle")
             .success(function (response) {
-                $scope.taxis = response;
+                $scope.vehicles = response;
             })
-            .error(function (error) {
+            .error(function (error) {                
                 $scope.errorMessage = error;
-            });
+             });
+			 
+		$scope.showCurrentTaxis = true;
+			 
     };
-
-    $scope.isEditing = false;
-
+	
+     
+    //Hides the add section
     $scope.beginEditing = function () {
         $scope.isEditing = true;
     };
 
-    $scope.cancelAddition = function () {
-        $scope.isEditing = false;
-    };
-
-    //Function to add new taxis
-    $scope.addTaxi = function () {
-        //Variable taxiDetails takes all the inputs for the taxi
-        var taxiDetails = {
-            Id: $scope.taxis.length + 1,
-            Make: $scope.taxiMake,
-            Capacity: $scope.taxiCapacity,
-            Driver: $scope.taxiDriver,
-            Registration: $scope.taxiRegistration,
-            Model: $scope.taxiModel
-        };
-        //Pushes the variable to the array
-        $scope.taxis.push(taxiDetails);
-        //Sets the text fields to be blank
-        $scope.taxiMake = "";
+	
+	
+	$scope.initTaxis = function () {
+		
+		$scope.taxiMake = "";
         $scope.taxiCapacity = "";
         $scope.taxiDriver = "";
         $scope.taxiRegistration = "";
         $scope.taxiModel = "";
-        //Switches to the taxi view
-        $scope.isEditing = false;
+	};
+	
+    //Gets all of the inputed data from the html form
+    $scope.addTaxi = function () {
+        var taxiDetails = {           
+			Make: $scope.taxiMake,
+			Capacity: $scope.taxiCapacity,
+			Driver: $scope.taxiDriver,
+			Registration: $scope.taxiRegistration,
+			Model: $scope.taxiModel,
+        };		
+        //Posts the inputed taxi details to the url array
+        $http.post("http://webteach_net.hallam.shu.ac.uk/acesjas/api/vehicle", taxiDetails)
+            .success(function () {				
+                $scope.initTaxis();
+                $scope.isEditing = false;
+                $scope.loadData()
+            })
+            .error(function (error) {
+                $scope.errorMessage = error;
+            });                
     };
-
-    //Function to remove taxis, gets taxi id from the web page
+	
+    //Gets the taxiId to remove from the html page and deletes that entry
     $scope.removeTaxi = function (taxiId) {
-        
-        var taxiToRemove = $scope.taxis.indexOf(taxiId);        
-        taxiToRemove += taxiId;
-        $scope.errorMessage = taxiToRemove;
-        $scope.taxis.splice(taxiToRemove, 1);
-       
+        //var taxiToRemove = $scope.taxis.indexOf(taxiId);
+        //$scope.taxis.splice(taxiToRemove, 1);
+        $http.delete("http://webteach_net.hallam.shu.ac.uk/acesjas/api/its/vehicle" + taxiId)
+            .success(function () {
+                $scope.loadData()
+            })
+            .error(function (error) {
+                $scope.errorMessage = error;
+            })
     };
-
-   
+	
+    //Switches back to to the view list
+    $scope.cancelAddition = function () {
+        $scope.isEditing = false;
+		$scope.initTaxis();
+    };
 
 });
