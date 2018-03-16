@@ -1,0 +1,16 @@
+﻿body {
+    padding: 15px;
+}
+
+td{
+    margin: 3px;
+}
+
+.btn-primary{
+    padding: 6px 12px;
+    height: 20px;
+}
+
+.table-striped td{
+    margin-left: 30px;
+}
