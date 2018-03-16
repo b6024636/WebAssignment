@@ -3,7 +3,7 @@
 
 <head>
     <!-- Angular link -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <!-- Local css link-->
     <link rel="stylesheet" href="css/StyleSheet.css">
     <!-- Latest compiled and minified Bootstrap CSS -->
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 </head>
 
-<body ng-controller="taxiController" ng-init="init()">
+<body ng-controller="taxiController" ng-init="loadData()">
     <!--Navbar-->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -40,12 +40,16 @@
     <!--Header/Main constant area-->
     <div class="row">
         <h2>SHU Taxis</h2>
+		{{test}}
     </div>
-   
+   <div class="homeNavigation" ng-show="showHomeNavigation">
+		<p>Show current taxis</p>
+		<button ng-click="showCurrentTaxis = !showCurrentTaxis; showHomeNavigation = !showHomeNavigation;">Go</button>
+	</div>
 
 
     <!--Show current taxis-->
-    <div ng-show="!isEditing">
+    <div ng-show="!showCurrentTaxis">
         <h4 style="text-decoration:underline;">Current taxis</h4>
         <p>Search Taxi: <input type="text" ng-model="search" /></p>
         <p>{{errorMessage | json}}</p>
@@ -57,7 +61,7 @@
                 <td>Registration</td>
                 <td>Model</td>
             </tr>
-            <tr ng-repeat="taxi in taxis | filter:search">
+            <tr ng-repeat="taxi in vehicles | filter:search">
                 <td>{{taxi.Make}}</td>
                 <td>{{taxi.Capacity}}</td>
                 <td>{{taxi.Driver}}</td>
