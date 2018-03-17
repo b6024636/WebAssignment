@@ -8,6 +8,10 @@ td{
     width: 100px;
 }
 
+table{
+    margin-left: 30%;
+}
+
 .btn-primary{
     padding: 6px 12px;
     height: 35px;
@@ -26,5 +30,41 @@ td{
 .content input{
     width: 30%;
     clear: both;
+}
+
+.homeNavigation{
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.homeNavigation ul{
+    list-style-type: none;
+    margin-left: 18%;
+    
+}
+
+.homeNavigation li {
+    display: inline;
+    margin-left: 60px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    
+}
+
+.homeNavigation a {
+    padding-top: 28px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 28px;
+    text-align: left;
+}
+
+.homeNavigation a:hover {
+    background-color: #d8ecf9;
+    transition: all 400ms ease-in-out;
+    cursor: pointer;
 }
 

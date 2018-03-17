@@ -1,5 +1,6 @@
 angular.module("taxiModule").controller("bookingController", function ($scope, $http) {
     $scope.bookings = [];
+    $scope.getCurrentRoutes = [];
 
     $scope.$on('callBookings', function () {
         $scope.showBookingList();
@@ -21,6 +22,8 @@ angular.module("taxiModule").controller("bookingController", function ($scope, $
                 $scope.errorMessage = error;
             });
     };
+
+    
 
     $scope.beginBookingAdding = function () {
         $scope.isBookingAdding = true;
