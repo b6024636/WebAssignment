@@ -24,29 +24,43 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">SHU Taxis</a>
+                <a class="navbar-brand" href="#" ng-click="returnHome()">SHU Taxis</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="#" ng-click="cancelAddition()">View Taxis<span class="sr-only">(current)</span></a></li>
-                    <li><a href="" ng-click="beginEditing()">Add Taxi</a></li>
                 </ul>
             </div>
         </div>
 
     </nav>
+
     <!--Header/Main constant area-->
     <div class="row">
         <h2>SHU Taxis</h2>
 		{{test}}
     </div>
-   <div class="homeNavigation" ng-show="showHomeNavigation">
-		<p>Show current taxis</p>
-		<button ng-click="showCurrentTaxis = !showCurrentTaxis; showHomeNavigation = !showHomeNavigation;">Go</button>
-	</div>
 
+    <!--Manages the navigation of the different sections of the site-->
+   <div class="homeNavigation" ng-show="showHomeNavigation">
+       <ul>
+           <li>Show current taxis
+           <button ng-click="hideTaxiAdding()">Go</button>
+           </li>
+           <li>
+               Show current bookings
+               <button ng-click="">Go</button>
+           </li>
+           <li>
+               Show current routes
+               <button ng-click="">Go</button>
+           </li>
+           
+       </ul>
+	</div>
+    
 
     <!--Show current taxis-->
     <div ng-show="!showCurrentTaxis">
@@ -62,22 +76,24 @@
                 <td>Model</td>
             </tr>
             <tr ng-repeat="taxi in vehicles | filter:search">
+                <td>{{taxi.Id}}</td>
                 <td>{{taxi.Make}}</td>
                 <td>{{taxi.Capacity}}</td>
                 <td>{{taxi.Driver}}</td>
                 <td>{{taxi.Registration}}</td>
                 <td>{{taxi.Model}}</td>
                 <td><a href="" ng-click="removeTaxi(taxi.Id)">Remove</a></td>
+                <td><a href="" ng-click="showEditTaxi"</td>
             </tr>
         </table>
-        <button ng-click="beginEditing()" class="btn-primary">Add new Taxi</button>
+        <button ng-click="beginTaxiAdding();" class="btn-primary">Add new Taxi</button>
     </div>
 
     <!--Add taxis-->
-    <div ng-show="isEditing">
+    <div ng-show="isTaxiAdding">
         <h2>Add Taxi</h2>
         <label>Make: <input ng-model="taxiMake" placeholder="e.g Nissan" /></label><br>
-        <label>Capacity: <input ng-model="taxiCapacity" placeholder="e.g 3" /></label><br>
+        <label>Capacity: <input type="number"ng-model="taxiCapacity" placeholder="e.g 3" /></label><br>
         <label>Driver: <input ng-model="taxiDriver" placeholder="e.g John Doe" /></label><br>
         <label>Registration: <input ng-model="taxiRegistration" placeholder="e.g AR1 RE" /></label><br>
         <label>Model: <input ng-model="taxiModel" placeholder="e.g Corsa" /></label><br>
