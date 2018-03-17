@@ -1,9 +1,11 @@
 ﻿body {
     padding: 15px;
+    background-color: #faebd7;
 }
 
 td{
     margin: 3px;
+    width: 100px;
 }
 
 .btn-primary{
@@ -15,3 +17,14 @@ td{
 .table-striped td{
     margin-left: 30px;
 }
+
+.content {
+    background-color: #faebd7;
+    padding: 3px;
+    border-radius: 2px;
+}
+.content input{
+    width: 30%;
+    clear: both;
+}
+
