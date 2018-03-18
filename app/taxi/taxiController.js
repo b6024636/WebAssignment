@@ -6,7 +6,7 @@
     //Recieves callTaxis and loads data
     $scope.$on('callTaxis', function () {
         $scope.showTaxiList();
-        $scope.loadTaxis();       
+              
     });
 
     $scope.$on('hideContent', function () {
@@ -22,9 +22,7 @@
             })
             .error(function (error) {                
                 $scope.errorMessage = error;
-             });
-			 
-		
+            });
 			 
     };
 
@@ -56,11 +54,10 @@
     };
     //Hides the taxi adding section and shows all the current vehicles
     $scope.showTaxiList = function () {
-        $scope.isTaxiAdding = false;
         $scope.showCurrentTaxis = true;
-        $scope.showHomeNavigation = false;
+		$scope.loadTaxis();
+		$scope.isTaxiAdding = false;
         $scope.isTaxiEditing = false;
-        $scope.loadTaxis();
         $scope.resetTaxiForm();
     };
 

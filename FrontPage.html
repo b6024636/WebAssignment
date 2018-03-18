@@ -131,11 +131,16 @@
             </div>
             <div ng-show="isBookingAdding">
                 <h2>Add Taxi</h2>
+				<p>{{errorMessage | json}}</p>
                 <label>Passenger Name: <input ng-model="addBookingName" placeholder="e.g John Doe" /></label><br>
                 <label>Pickup Location: <input ng-model="addBookingPickup" placeholder="e.g Nissan" /></label><br>
                 <label>Drop Off Location: <input ng-model="addBookingDropOff" placeholder="e.g 3" /></label><br>
                 <label>Number of Passengers: <input type="number" ng-model="addBookingNoPassengers" placeholder="e.g John Doe" /></label><br>                
-                <label>Vehichle Id: <input type="number" ng-model="addBookingVehicleId" placeholder="e.g Corsa" /></label><br>
+                <label>Vehichle Id: 
+					<select ng-model="addBookingVehicleId">
+						<option ng-repeat="vehicle in vehicles" value="{{vehicle.Id}}"  ng-selected="{{$first}}">{{vehicle.Id}} - {{vehicle.Driver}} - {{vehicle.Make}} {{vehicle.Model}}</option>
+					</select>
+				</label><br>
                 <button ng-click="addBooking()" class="btn-primary">Add</button> <button ng-click="cancelBooking()" class="btn">Cancel</button>
             </div>
         </div>
