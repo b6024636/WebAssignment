@@ -3,9 +3,15 @@ angular.module("taxiModule").controller("routeController", function ($scope, $ht
     $scope.routes = [];
     var routeId
 
-    $scope.$on('callRoutes', function () {
-        $scope.showRouteList();
-        $scope.loadRoutes();
+    //Recieves callBookings broadcast and loads relevant data for staff role
+    $scope.$on('callRoutes1', function () {
+        $scope.role = 1;  
+        $scope.showRouteList();   
+    });
+	//Same as above but for manager
+	$scope.$on('callRoutes2', function () {
+        $scope.role = 2;  
+        $scope.showRouteList();    
     });
 
     $scope.$on('hideContent', function () {
@@ -31,9 +37,14 @@ angular.module("taxiModule").controller("routeController", function ($scope, $ht
 
     $scope.showRouteList = function (){
         $scope.showCurrentRoutes = true;
+		$scope.loadRoutes();
+		if($scope.role == 2){
+			$scope.authorised = true;
+		}else{
+			$scope.authorised = false;
+		}	
         $scope.isRouteAdding = false;
-        $scope.isRouteEditing = false;
-        $scope.loadRoutes();
+        $scope.isRouteEditing = false;       
         $scope.resetRouteForm();
     };
 
@@ -46,7 +57,10 @@ angular.module("taxiModule").controller("routeController", function ($scope, $ht
         $scope.addRouteStart = "";
         $scope.addRouteEnd = "";
         $scope.editRouteEnd = "";
-        $scope.editRouteStart = ";"
+        $scope.editRouteStart = "";
+		//Sets the forms to be valid after being reset
+		$scope.addRouteForm.$setPristine();
+		$scope.editRouteForm.$setPristine();
     };
 
     $scope.addRoute = function () {

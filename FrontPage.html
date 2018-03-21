@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html ng-app="myApp">
 
 <head>
@@ -7,19 +7,24 @@
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
     <!-- Local css link-->
     <link rel="stylesheet" href="css/StyleSheet.css">
+	<link href="css/bootstrap-custom.min.css" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+    
 </head>
 
 <body ng-controller="pageController">
-    <!--Navbar-->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-contents" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -29,83 +34,126 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li style="right:0px;"><a href="#" ng-show="loginButton" ng-click="loginForm = !loginForm">Login <span class="glyphicon glyphicon-user"></span><span class="sr-only">(current)</span></a></li>
-					<li style="right:0px;"><a href="#" ng-show="!logout" ng-click="logout()">Logout <span class="glyphicon glyphicon-user"></span><span class="sr-only">(current)</span></a></li>
+            <div class="collapse navbar-collapse navbar-right" id="navbar-collapse-contents">
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="right:0px;"><a href="#" ng-show="loginButton" ng-click="loginForm = !loginForm">Login <span class="glyphicon glyphicon-log-in"></span><span class="sr-only">(current)</span></a></li>
+					<li style="right:0px;"><a href="#" ng-show="!logoutButton" ng-click="logout()">Logout <span class="glyphicon glyphicon-log-in"></span><span class="sr-only">(current)</span></a></li>
                 </ul>
-            </div>
-        </div>
-
+            </div>			
+        </div>		
     </nav>
+	
 
     <!--Header-->
     <div class="header shuHeader">
-        <h2>SHU Taxis</h2>
-		<p ng-show="currentUser">Hello {{name}}, <a ng-click="logout()">Log Out?</a></p>
+        <h1>SHU Taxis</h1>		
     </div>
-
+	<p style="right:0px;" ng-show="currentUser">Hello {{name}}</p>
+	<div class="content" ng-show="defaultMessage">
+		<center>
+			<p style="font-weight: bold; font-size: 25px;">Welcome to SHU Taxis, please login to access the site.</p>	
+		</center>
+	</div>
     <!--Manages the navigation of the different sections of the site-->
    <div class="homeNavigation" ng-show="showHomeNavigation">
-       <ul class="inline">
-           <li><a ng-click="viewTaxis()">Show current taxis</a></li>
-           <li><a ng-click="viewBookings()">Show current bookings</a> </li>
-           <li><a ng-click="viewRoutes()">Show current routes</a></li>           
-       </ul>
+		<center>
+		   <ul class="inline">
+			   <li><a ng-click="viewTaxis()">Show current taxis</a></li>
+			   <li><a ng-click="viewBookings()">Show current bookings</a> </li>
+			   <li><a ng-click="viewRoutes()">Show current routes</a></li>
+		   </ul>
+	   </center>
 	</div>
-    
-    
+
+
         <!--Show current taxis-->
         <div ng-controller="taxiController">
             <div ng-show="showCurrentTaxis">
 				<div class="content">
-					<h4 style="text-decoration:underline;">Current taxis</h4>
-					<p>Search Taxi: <input type="text" ng-model="search" /></p>
+					<h2 style="text-decoration:underline;">Current taxis</h2>
+					<p>Search Taxis: <input type="text" ng-model="search" /></p>
 					<p>{{errorMessage | json}}</p>
-					<table class="table-striped">
-						<tr style="font-weight: bold; ">
-							<td>Id</td>
-							<td>Car Make</td>
-							<td>Capacity</td>
-							<td>Driver</td>
-							<td>Registration</td>
-							<td>Model</td>
-						</tr>
-						<tr ng-repeat="taxi in vehicles | filter:search">
-							<td>{{taxi.Id}}</td>
-							<td>{{taxi.Make}}</td>
-							<td>{{taxi.Capacity}}</td>
-							<td>{{taxi.Driver}}</td>
-							<td>{{taxi.Registration}}</td>
-							<td>{{taxi.Model}}</td>
-							<td><a href="" ng-click="removeTaxi(taxi)"> Remove</a></td>
-							<td><a href="" ng-click="editTaxi(taxi.Id)"> Edit</a></td>
-						</tr>
-					</table>
-					<button ng-click="beginTaxiAdding();" class="btn-primary">Add new Taxi</button>
+					<center>
+						<table class="table-striped">
+							<tr style="font-weight: bold; ">
+								<td>Id</td>
+								<td>Car Make</td>
+								<td>Capacity</td>
+								<td>Driver</td>
+								<td>Registration</td>
+								<td>Model</td>
+							</tr>
+							<tr ng-repeat="taxi in vehicles | filter:search">
+								<td>{{taxi.Id}}</td>
+								<td>{{taxi.Make}}</td>
+								<td>{{taxi.Capacity}}</td>
+								<td>{{taxi.Driver}}</td>
+								<td>{{taxi.Registration}}</td>
+								<td>{{taxi.Model}}</td>
+								<!--Only displays these if the user is authorised-->
+								<td ng-show="authorised"><a href="" class="removeBtn" ng-click="removeTaxi(taxi)"> Remove</a></td>
+								<td ng-show="authorised"><a href="" ng-click="editTaxi(taxi.Id)"> Edit</a></td>
+							</tr>
+						</table>
+						<button ng-click="beginTaxiAdding();" class="btn-primary">Add new Taxi</button>
+					</center>
 				</div>
             </div>
             <!--Add taxis-->
             <div ng-show="isTaxiAdding">
 				<div class="content">
 					<h2>Add Taxi</h2>
-					<label>Make: <input ng-model="addTaxiMake" placeholder="e.g Nissan" /></label><br>
-					<label>Capacity: <input type="number" ng-model="addTaxiCapacity" placeholder="e.g 3" /></label><br>
-					<label>Driver: <input ng-model="addTaxiDriver" placeholder="e.g John Doe" /></label><br>
-					<label>Registration: <input ng-model="addTaxiRegistration" placeholder="e.g AR1 RE" /></label><br>
-					<label>Model: <input ng-model="addTaxiModel" placeholder="e.g Corsa" /></label><br>
-					<button ng-click="addTaxi()" class="btn-primary">Add</button> <button ng-click="cancelAddition()" class="btn">Cancel</button>
+					<center>
+					<form name="addTaxiForm" novalidate>
+						<div class="form-group">
+							<!--Pattern checks for Capital letter at the start of each word input. Changes the outline red if its altered and invalid-->
+							<label>Make: <input class="formInput" ng-class="{'inputInvalid': addTaxiForm.addTaxiMake.$dirty && addTaxiForm.addTaxiMake.$invalid}" ng-model="addTaxiMake" id="addTaxiMake" name="addTaxiMake" placeholder="e.g Nissan" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+						</div>
+						<div class="form-group">
+							<label>Capacity: <input class="formInput" ng-class="{'inputInvalid': addTaxiForm.addTaxiCapacity.$dirty && addTaxiForm.addTaxiCapacity.$invalid}" type="number" name ="addTaxiCapacity" ng-model="addTaxiCapacity" placeholder="e.g 3" min="0" max="12" required/></label><br>
+						</div>
+						<div class="form-group">
+							<label>Driver: <input class="formInput" ng-class="{'inputInvalid': addTaxiForm.addTaxiDriver.$dirty && addTaxiForm.addTaxiDriver.$invalid}" name="addTaxiDriver" ng-model="addTaxiDriver" placeholder="e.g John Doe" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+						</div>
+						<div class="form-group">
+							<label>Registration: <input class="formInput" ng-class="{'inputInvalid': addTaxiForm.addTaxiReg.$dirty && addTaxiForm.addTaxiReg.$invalid}" name="addTaxiReg" ng-model="addTaxiRegistration" placeholder="e.g AR1 RE" pattern="[A-Z0-9\s]+"required/></label><br>
+						</div>
+						<div class="form-group">
+							<label>Model: <input class="formInput" ng-class="{'inputInvalid': addTaxiForm.addTaxiModel.$dirty && addTaxiForm.addTaxiModel.$invalid}" name="addTaxiModel" ng-model="addTaxiModel" placeholder="e.g Corsa" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>		
+						</div>
+						<div class="errorMessage" ng-show="editRouteForm.$error.$invalid">Ensure your inputs begin with capital letters</div>
+						<div class="errorMessage" ng-show="addTaxiForm.addTaxiCapacity.$dirty && addTaxiForm.addTaxiCapacity.$invalid">Capacity must be more than 0 and less than 12</div>
+						<button ng-disabled="addTaxiForm.$invalid" ng-click="addTaxi();" class="btn-primary">Add</button> <button ng-click="cancelAddition(); clearValidations();" class="btn">Cancel</button>
+					</form>
+					</center>
 				</div>
             </div>
             <!--Edit Taxis-->
             <div ng-show="isTaxiEditing">
 				<div class="content">
-					<label>Make: <input ng-model="taxiMake" placeholder="e.g Nissan" /></label><br>
-					<label>Capacity: <input type="number" ng-model="taxiCapacity" placeholder="e.g 3" /></label><br>
-					<label>Driver: <input ng-model="taxiDriver" placeholder="e.g John Doe" /></label><br>
-					<label>Registration: <input ng-model="taxiRegistration" placeholder="e.g AR1 RE" /></label><br>
-					<label>Model: <input ng-model="taxiModel" placeholder="e.g Corsa" /></label><br>
-					<button ng-click="editTaxiPush()" class="btn-primary">Update</button> <button ng-click="cancelEdit()" class="btn">Cancel</button>
+					<h2>Edit Route</h2>
+					<center>
+						<form name="editTaxiForm" novalidate>	
+							<div class="form-group">
+								<label>Make: <input class="formInput" ng-class="{'inputInvalid': editTaxiForm.editTaxiMake.$dirty && editTaxiForm.editTaxiMake.$invalid}" name="editTaxiMake" ng-model="taxiMake" placeholder="e.g Nissan" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="form-group">
+								<label>Capacity: <input class="formInput" ng-class="{'inputInvalid': editTaxiForm.editTaxiCapacity.$dirty && editTaxiForm.editTaxiCapacity.$invalid}" name="editTaxiCapacity" type="number" ng-model="taxiCapacity" placeholder="e.g 3" min="0" max="12" required/></label><br>
+							</div>
+							<div class="form-group">
+								<label>Driver: <input class="formInput" ng-class="{'inputInvalid': editTaxiForm.editTaxiDriver.$dirty && editTaxiForm.editTaxiDriver.$invalid}" name="editTaxiDriver" ng-model="taxiDriver" placeholder="e.g John Doe" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="form-group">
+								<label>Registration: <input class="formInput" ng-class="{'inputInvalid': editTaxiForm.editTaxiReg.$dirty && editTaxiForm.editTaxiReg.$invalid}" name="editTaxiReg" ng-model="taxiRegistration" placeholder="e.g AR1 RE" pattern="[A-Z0-9\s]+" required/></label><br>
+							</div>
+							<div class="form-group">
+								<label>Model: <input class="formInput" ng-class="{'inputInvalid': editTaxiForm.editTaxiReg.$dirty && editTaxiForm.editTaxiReg.$invalid}" name="editTaxiModel" ng-model="taxiModel" placeholder="e.g Corsa" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="errorMessage" ng-show="editTaxiForm.$error.required">Required information is missing</div>
+							<div class="errorMessage" ng-show="editRouteForm.$error.$invalid">Ensure your inputs begin with capital letters</div>
+							<button ng-disabled="editTaxiForm.$invalid" ng-click="editTaxiPush()" class="btn-primary">Update</button> <button ng-click="cancelEdit()" class="btn">Cancel</button>						
+						</form>
+					</center>
 				</div>
             </div>
         </div>
@@ -115,157 +163,218 @@
         <div ng-controller="bookingController">
             <div ng-show="showCurrentBookings">
 				<div class="content">
-					<h4 style="text-decoration:underline;">Current bookings</h4>
+					<h2 style="text-decoration:underline;">Current bookings</h2>
 					<p>Search Bookings: <input type="text" ng-model="search" /></p>
 					<p>{{errorMessage | json}}</p>
-					<table class="table-striped">
-						<tr style="font-weight: bold; ">
-							<td>Id</td>
-							<td>Passenger Name</td>
-							<td>Current Passengers</td>
-							<td>Pickup Location</td>
-							<td>Drop Off Location</td>
-							<td>Taxi Id</td>
-						</tr>
-						<tr ng-repeat=" booking in bookings | filter:search">
-							<td>{{booking.Id}}</td>
-							<td>{{booking.PassengerName}}</td>
-							<td>{{booking.CurrentPassenger}}</td>
-							<td>{{booking.PickupLocation}}</td>
-							<td>{{booking.DropOffLocation}}</td>                        
-							<td>{{booking.VehicleId}}</td>
-							<td><a href="" ng-click="removeBooking(booking)"> Remove</a></td>
-							<td><a href="" ng-click="editBooking(booking.Id)"> Edit</a></td>
-						</tr>
-					</table>
-					<button ng-click="beginBookingAdding();" class="btn-primary">Add new Booking</button>
+					<center>
+						<table class="table-striped">
+							<tr style="font-weight: bold; ">
+								<td>Id</td>
+								<td>Passenger Name</td>
+								<td>Current Passengers</td>
+								<td>Pickup Location</td>
+								<td>Drop Off Location</td>
+								<td>Taxi Id</td>
+							</tr>
+							<tr ng-repeat=" booking in bookings | filter:search">
+								<td>{{booking.Id}}</td>
+								<td>{{booking.PassengerName}}</td>
+								<td>{{booking.CurrentPassenger}}</td>
+								<td>{{booking.PickupLocation}}</td>
+								<td>{{booking.DropOffLocation}}</td>
+								<td>{{booking.VehicleId}}</td>
+								<td ng-show="authorised"><a href="" class="removeBtn" ng-click="removeBooking(booking)"> Remove</a></td>
+								<td ng-show="authorised"><a href="" ng-click="editBooking(booking.Id); maxPassengers(booking.VehicleId)"> Edit</a></td>
+							</tr>
+						</table>
+						<button ng-click="beginBookingAdding();" class="btn-primary">Add new Booking</button>
+					</center>
 				</div>
             </div>
 			<!--Add booking-->
             <div ng-show="isBookingAdding">
 				<div class="content">
-					<h2>Add Booking</h2>
+					<h2>Add Booking</h2>				
 					<p>{{errorMessage | json}}</p>
-					<label>Passenger Name: <input ng-model="addBookingName" ng-required="true" placeholder="e.g John Doe" /></label><br>					
-					<label>Number of Passengers: <input type="number" ng-model="addBookingNoPassengers" ng-required="true" placeholder="e.g John Doe" /></label><br>    
-					<!--Loops through the route locations displays them in a dropdown box-->
-					<label>Pickup Location: 
-						<select ng-model="addBookingPickup" ng-required="true">
-							<option disabled selected value><center> -- select a pickup point -- </center></option>
-							<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteStartPoint}}</option>
-							<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteEndPoint}}</option>
-						</select>
-					</label><br>
-					<label>Drop Off Location: 
-						<select ng-model="addBookingDropOff" ng-required="true">
-							<option disabled selected value><center> -- select a dropoff point -- </center></option>
-							<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteStartPoint}}</option>
-							<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteEndPoint}}</option>
-						</select>
-					</label><br> 
-					<!--Loops through all the current vehicles and displays the driver, make and model in a drop down box-->
-					<label>Vehichle Id: 
-						<select ng-model="addBookingVehicleId" ng-required="true">
-							<option disabled selected value><center> -- select a vehicle -- </center></option>
-							<option ng-repeat="vehicle in vehicles" value="{{vehicle.Id}}">{{vehicle.Driver}} - {{vehicle.Make}} {{vehicle.Model}}</option>
-						</select>
-					</label><br>
-					<button ng-click="addBooking()" class="btn-primary" ng-disabled="newDiscoveryForm.$invalid">Add</button> <button ng-click="cancelBooking()" class="btn">Cancel</button>
+					<center>
+						<form name="addBookingForm" novalidate>
+							<div class="form-group">
+								<label>Passenger Name: <input class="formInput" ng-class="{'inputInvalid': addBookingForm.addBookingName.$dirty && addBookingForm.addBookingName.$invalid}" name="addBookingName" ng-model="addBookingName" ng-required="true" placeholder="e.g John Doe" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<!--Loops through all the current vehicles and displays the driver, make and model in a drop down box-->
+							<div class="form-group">
+								<label>Vehichle Id:
+									<select ng-model="addBookingVehicleId" id="selectedTaxi" required>
+										<option disabled selected value><center> -- select a vehicle -- </center></option>
+										<option ng-repeat="vehicle in vehicles" ng-click="maxPassengers(vehicle.Id)" value="{{vehicle.Id}}">{{vehicle.Driver}} - {{vehicle.Make}} {{vehicle.Model}}</option>
+									</select>
+								</label><br>
+							</div>
+							<div class="form-group">
+								<label>Number of Passengers: <input class="formInput" ng-class="{'inputInvalid': addBookingForm.addBookingNoPassengers.$dirty && addBookingForm.addBookingNoPassengers.$invalid}" name="addBookingNoPassengers" type="number" ng-model="addBookingNoPassengers" min="1" max="{{vehicle.Capacity}}" required/></label><br>
+							</div>
+							<!--Loops through the route locations displays them in a dropdown box-->
+							<div class="form-group">
+								<label>Pickup Location:
+									<select ng-model="addBookingPickup" required>
+										<option disabled selected value><center> -- select a pickup point -- </center></option>
+										<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteStartPoint}}</option>
+										<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteEndPoint}}</option>
+									</select>
+								</label><br>
+							</div>
+							<div class="form-group">
+								<label>Drop Off Location:
+									<select ng-model="addBookingDropOff" required>
+										<option disabled selected value><center> -- select a dropoff point -- </center></option>
+										<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteStartPoint}}</option>
+										<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteEndPoint}}</option>
+									</select>
+								</label><br>
+							</div>
+							
+							<div class="errorMessage" ng-show="editRouteForm.$error.$invalid">Ensure your inputs begin with capital letters</div>
+							<div class="errorMessage" ng-show="editBookingForm.$error.max || editBookingForm.$error.min">Number passengers for this taxi must be more than 1 or less than {{maxTaxiCapacity}}</div>
+							<button ng-disabled="addBookingForm.$invalid" ng-click="addBooking()" class="btn-primary">Add</button> <button ng-click="cancelBooking()" class="btn">Cancel</button>
+						</form>
+					</center>
 				</div>
             </div>
 			<!--Edit Booking-->
 			<div ng-show="isBookingEditing">
 				<div class="content">
-					<label>Passenger Name: <strong ng-model="BookingName">{{BookingName}}</strong></label><br>					
-					<label>Number of Passengers: <input type="number" ng-model="editBookingNoPassengers" ng-required="true" placeholder="e.g John Doe" /></label><br>    
-					<!--Loops through the route locations displays them in a dropdown box-->
-					<label>Pickup Location: 
-						<select ng-model="editBookingPickup" ng-required="true">
-							<option disabled selected value><center> -- select a pickup point -- </center></option>
-							<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteStartPoint}}</option>
-							<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteEndPoint}}</option>
-						</select>
-					</label><br>
-					<label>Drop Off Location: 
-						<select ng-model="editBookingDropOff" ng-required="true">
-							<option disabled selected value><center> -- select a dropoff point -- </center></option>
-							<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteStartPoint}}</option>
-							<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteEndPoint}}</option>
-						</select>
-					</label><br> 
-					<!--Loops through all the current vehicles and displays the driver, make and model in a drop down box-->
-					<label>Vehichle Id: 
-						<select ng-model="editBookingVehicleId" ng-required="true">
-							<option disabled selected value><center> -- select a vehicle -- </center></option>
-							<option ng-repeat="vehicle in vehicles" value="{{vehicle.Id}}">{{vehicle.Driver}} - {{vehicle.Make}} {{vehicle.Model}}</option>
-						</select>
-					</label><br>
-					<button ng-click="editBookingPush()" class="btn-primary"  ng-disabled="newDiscoveryForm.$invalid">Update</button> <button ng-click="cancelBooking()" class="btn">Cancel</button>
+					<h2>Edit Booking</h2>
+					<center>
+						<form name="editBookingForm" novalidate>
+							<div class="form-group">
+								<label>Passenger Name: <strong ng-model="BookingName">{{BookingName}}</strong></label><br>
+							</div>
+							<div class="form-group">
+								<label>Number of Passengers: <input class="formInput" ng-class="{'inputInvalid': editBookingForm.editBookingNoPassengers.$dirty && editBookingForm.editBookingNoPassengers.$invalid}" name="editBookingNoPassengers" type="number" ng-model="editBookingNoPassengers" ng-required="true" min="1" max="{{maxTaxiCapacity}}" required/></label><br>
+							</div>
+							<!--Loops through the route locations displays them in a dropdown box-->
+							<div class="form-group">
+								<label>Pickup Location:
+									<select ng-model="editBookingPickup" ng-required="true" required>
+										<option disabled selected value><center> -- select a pickup point -- </center></option>
+										<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteStartPoint}}</option>
+										<option ng-repeat="route in routes" value="{{route.RouteStartPoint}}">{{route.RouteEndPoint}}</option>
+									</select>
+								</label><br>
+							</div>
+							<div class="form-group">
+								<label>Drop Off Location:
+									<select ng-model="editBookingDropOff" ng-required="true" required>
+										<option disabled selected value><center> -- select a dropoff point -- </center></option>
+										<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteStartPoint}}</option>
+										<option ng-repeat="route in routes" value="{{route.RouteEndPoint}}">{{route.RouteEndPoint}}</option>
+									</select>
+								</label><br>
+							</div>
+							<!--Loops through all the current vehicles and displays the driver, make and model in a drop down box-->
+							<div class="form-group">
+								<label>Vehichle Id:
+									<select ng-model="editBookingVehicleId" required>
+										<option disabled selected value><center> -- select a vehicle -- </center></option>
+										<option ng-repeat="vehicle in vehicles" value="{{vehicle.Id}}">{{vehicle.Driver}} - {{vehicle.Make}} {{vehicle.Model}}</option>
+									</select>
+								</label><br>	
+							</div>
+							<div class="errorMessage" ng-show="editRouteForm.$error.$invalid">Ensure your inputs begin with capital letters</div>
+							<div class="errorMessage" ng-show="editBookingForm.$error.max || editBookingForm.$error.min">Number passengers for this taxi must be more than 1 or less than {{maxTaxiCapacity}}</div>
+							<div class="errorMessage" ng-show="editBookingForm.$error.required">Required information is missing</div>
+							<!--<div class="errorMessage" ng-show="editBookingForm.$error.min">Number passengers must be 1 or more</div>-->
+							<button ng-disabled="editBookingForm.$invalid" ng-click="editBookingPush()" class="btn-primary">Update</button> <button ng-click="cancelBooking()" class="btn">Cancel</button>
+						</form>
+					</center>
 				</div>
             </div>
         </div>
     <!--End Bookings-->
-	
+
     <!--Show Current Routes-->
         <div ng-controller="routeController">
             <div ng-show="showCurrentRoutes">
 				<div class="content">
-                <h4 style="text-decoration:underline;">Current Routes</h4>
+                <h2 style="text-decoration:underline;">Current Routes</h2>
                 <p>Search Routes: <input type="text" ng-model="search" /></p>
                 <p>{{errorMessage | json}}</p>
-                <table class="table-striped">
-                    <tr style="font-weight: bold; ">
-                        <td>Route Start Point</td>
-                        <td>Route End Point</td>
-                    </tr>
-                    <tr ng-repeat="route in routes | filter:search">
-                        <td>{{route.RouteStartPoint}}</td>
-                        <td>{{route.RouteEndPoint}}</td>
-                        <td><a href="" ng-click="removeRoute(route)"> Remove</a></td>
-                        <td><a href="" ng-click="editRoute(route.Id)"> Edit</a></td>
-                        
-                    </tr>
-                </table>
-                <button ng-click="beginRouteAdding();" class="btn-primary">Add new Route</button>
+				<center>
+					<table class="table-striped">
+						<tr style="font-weight: bold; ">
+							<td>Route Start Point</td>
+							<td>Route End Point</td>
+						</tr>
+						<tr ng-repeat="route in routes | filter:search">
+							<td>{{route.RouteStartPoint}}</td>
+							<td>{{route.RouteEndPoint}}</td>
+							<td ng-show="authorised"><a href="" class="removeBtn" ng-click="removeRoute(route)"> Remove</a></td>
+							<td ng-show="authorised"><a href="" ng-click="editRoute(route.Id)"> Edit</a></td>
+						</tr>
+					</table>
+					<button ng-click="beginRouteAdding();" class="btn-primary">Add new Route</button>
+				</center>
 				</div>
             </div>
             <!--Add route-->
             <div ng-show="isRouteAdding">
 				<div class="content">
 					<h2>Add Route</h2>
-					<label>Route Start Point: <input ng-model="addRouteStart"/></label><br>
-					<label>Route End Point: <input ng-model="addRouteEnd"/></label><br>
-					<button ng-click="addRoute()" class="btn-primary">Add</button> <button ng-click="cancelRoute()" class="btn">Cancel</button>
+					<center>
+						<form name="addRouteForm" novalidate>
+							<div class="form-group">
+								<label>Route Start Point: <input class="formInput" ng-class="{'inputInvalid': addRouteForm.addRouteStart.$dirty && addRouteForm.addRouteStart.$invalid}" name="addRouteStart" ng-model="addRouteStart" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="form-group">
+								<label>Route End Point: <input class="formInput" ng-class="{'inputInvalid': addRouteForm.addRouteEnd.$dirty && addRouteForm.addRouteEnd.$invalid}" name="addRouteEnd" ng-model="addRouteEnd" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="errorMessage" ng-show="editRouteForm.$error.$invalid">Ensure your routes begin with capital letters</div>
+							<button ng-disabled="addRouteForm.$invalid" ng-click="addRoute()" class="btn-primary">Add</button> <button ng-click="cancelRoute()" class="btn">Cancel</button>
+						</form>
+					</center>
 				</div>
             </div>
             <!--Edit route-->
             <div ng-show="isRouteEditing">
 				<div class="content">
-					<label>Route Start Point: <input ng-model="editRouteStart" /></label><br>
-					<label>Route End Point: <input ng-model="editRouteEnd" /></label><br>
-					<button ng-click="editRoutePush()" class="btn-primary">Update</button> <button ng-click="cancelEdit()" class="btn">Cancel</button>
+					<h2>Edit Route</h2>
+					<center>
+						<form name="editRouteForm" novalidate>
+							<div class="form-group">
+								<label>Route Start Point: <input class="formInput" ng-class="{'inputInvalid': editRouteForm.editRouteStart.$dirty && editRouteForm.editRouteStart.$invalid}" name="editRouteStart" ng-model="editRouteStart" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="form-group">
+								<label>Route End Point: <input class="formInput" ng-class="{'inputInvalid': editRouteForm.editRouteEnd.$dirty && editRouteForm.editRouteEnd.$invalid}" name="editRouteEnd" ng-model="editRouteEnd" pattern="^\b(?:[A-Z]\w+\b(?:\s*)?)+$" required/></label><br>
+							</div>
+							<div class="errorMessage" ng-show="editRouteForm.$error.$invalid">Ensure your routes begin with capital letters</div>
+							<div class="errorMessage" ng-show="editRouteForm.$error.required">Required information is missing</div>
+							<button ng-disabled="editRouteForm.$invalid" ng-click="editRoutePush()" class="btn-primary">Update</button> <button ng-click="cancelEdit()" class="btn">Cancel</button>
+						</form>
+					</center>
 				</div>
             </div>
         </div>
         <!--End route-->
-		
+
 		<!--Log in-->
-		
+
 			<div ng-show="!loginForm">
+				<div class="content">
 					<h2>Login page</h2>
 					<form id="loginForm" name="loginForm">
 						Enter username:
 						<input name="username" type="text" ng-model="username" /><br />
 						Enter password:
 						<input name="password" type="password" ng-model="password" /><br />
-						<p ng-show="loginError">Incorrect details</p>
+						<p ng-show="loginError" class="Error message">Your login details are incorrect</p>
 						<button ng-click="login()"> Login </button>
 					</form>
-					<!-- for now, just display the values returned from the web service -->
+					<!-- for now, just display the values returned from the web service for testing reasons -->
 					<!--{{name}}<br />
 					{{role}}<br/>
 					{{isAuthenticated}}</br>
 					{{test}}-->
+				</div>
 
 				<div ng-show="errorMessage">
 					Error = {{errorMessage | json}}
@@ -280,10 +389,8 @@
     <script src="app/taxi/bookingController.js"></script>
     <script src="app/taxi/pageController.js"></script>
     <script src="app/taxi/routeController.js"></script>
-	<script src="app/authentication/authenticationModule.js"></script>
-    <script src="app/taxi/authenticationController.js"></script>
 
-   
+
 </body>
 
 </html>

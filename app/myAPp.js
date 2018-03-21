@@ -1,1 +1,1 @@
-﻿angular.module("myApp", ["taxiModule", "authenticationModule"])
+﻿angular.module("myApp", ["taxiModule"])

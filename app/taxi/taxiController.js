@@ -2,13 +2,19 @@
     //Sets up the taxis array
     $scope.vehicles = [];
     var taxiID;
-
-    //Recieves callTaxis and loads data
-    $scope.$on('callTaxis', function () {
-        $scope.showTaxiList();
-              
+	$scope.role = 0;
+	
+    //Recieves callTaxis and loads data for staff role
+    $scope.$on('callTaxis1', function () {
+        $scope.role = 1;  
+        $scope.showTaxiList();   
     });
-
+	//Same as above but for manager
+	$scope.$on('callTaxis2', function () {
+        $scope.role = 2;  
+        $scope.showTaxiList();    
+    });
+	//Calls hideTaxi function
     $scope.$on('hideContent', function () {
         $scope.hideTaxis();
     });
@@ -45,6 +51,9 @@
         $scope.addTaxiDriver = "";
         $scope.addTaxiRegistration = "";
         $scope.addTaxiModel = "";
+		//Sets the forms to be valid after being reset
+		$scope.addTaxiForm.$setPristine();
+		$scope.editTaxiForm.$setPristine();
     };
 
     //Hides the show taxis section adn displays the add taxi form
@@ -56,6 +65,12 @@
     $scope.showTaxiList = function () {
         $scope.showCurrentTaxis = true;
 		$scope.loadTaxis();
+		//Shows/Doesn't show edit and remove options
+		if($scope.role == 2){
+			$scope.authorised = true;
+		}else{
+			$scope.authorised = false;
+		}		
 		$scope.isTaxiAdding = false;
         $scope.isTaxiEditing = false;
         $scope.resetTaxiForm();
