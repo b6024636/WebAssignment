@@ -1,18 +1,24 @@
 ﻿body {
-    padding: 15px;
+   
+   
     background-color: #faebd7;
+	
 }
 
 td{
-    margin: 3px;
-    width: 100px;
+    padding: 100px;
 }
 
 table{
-	border-spacing: 24px;
+	
+	border-spacing: 10px;
+    border-collapse: separate;
 	margin-bottom: 15px;
 }	
 
+h2{
+	text-decoration: underline;
+}
 a:hover{
 	text-decoration: none;
 }
@@ -31,17 +37,25 @@ a:hover{
 	color: red;
 }
 
-
+.shuBrand{
+	position: fixed;
+	right: 0px;
+	bottom: 0px;
+	height: 50px;
+	width: auto;
+}
 
 /*------------------------
 Header
 -------------------------*/
 .shuHeader{	
 	background-color: #b40756;
-	padding-bottom: 20px;
+	padding-bottom: 25px;
 	padding-top: 20px;
-	padding-left: 10px;
+	padding-left: 25px;
 	border-radius: 2px;
+	width: 100%;
+	margin-bottom: 30px;
 	
 }
 
@@ -49,6 +63,7 @@ Header
 	color: #f6f6f6;
 	font-family: bookman;
 	font-weight: bold;
+	font-size: 45px;
 }
 
 
@@ -56,57 +71,67 @@ Header
 Home Content
 -------------------------*/
 .homeNavigation{
-    margin-bottom: 30px;
-    margin-top: 50px;
+	display: inline;
+	margin: 100px; 
+
 }
 
-.homeNavigation ul{
-    list-style-type: none;
-	padding: 0px;
- 
-}
-
-.homeNavigation li {
-    display: inline;
-    margin-left: 30px;
-	margin-right: 30px;
-	margin-bottom: 20px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 2px;
-    padding-top: 28px;
-    padding-bottom: 28px;
     
 }
 
+
 .homeNavigation a {
-    padding-top: 28px;
+    /*padding-top: 28px;
     padding-left: 60px;
     padding-right: 60px;
     padding-bottom: 28px;
 	padding: auto;
-	margin: 0px;
-	width: auto;
-	position: relative;
-	
- 
+	margin-right: 0px;
+	width: auto;	
+	font-size: 28px;*/
+}
+.homeNavigation a:hover {    
+    cursor: pointer;
 }
 
-.homeNavigation a:hover {
-    background-color: #d8ecf9;
-    transition: all 400ms ease-in-out;
-    cursor: pointer;
+.navBox{
+	border-style: solid;
+	border-width: 2px;
+	padding: 10px;
+	text-align: left;
+	box-shadow: 0 0 0 4px rgba(180, 7, 86, 0.0);
+    transition: all 200ms ease-in-out;
+	
+}
+.navBox:hover{
+	box-shadow: 0 0 0 4px rgba(180, 7, 86, 0.8);
+}
+
+.shuBtn{
+	background-color:#f5f5f5;
+	
+}
+.shuBtn:hover:enabled{
+	color:white;
+    background-color: #b40756;
+	border-width: 0px;
+    transition: all 400ms ease-in-out;  
+	
+	
 }
 
 @media only screen and (max-width: 1010px) {
    .homeNavigation li {
+	   padding-top: 24px;
+	   padding-bottom: 24px;
 	   display: block;
 	   /*width: auto;*/
    }
    .homeNavigation a{
 	   padding-left: 30%;
 	   padding-right: 30%;
-	   
+	   font-size: 4vw;
+	   font-size:12px;
    }
 }
 
@@ -118,17 +143,33 @@ Main Content
     padding: 20px;
     border-radius: 2px;
 	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
-.content input{
-	display: block;
+.content p{
+	font-size: 18px;
 	
 }
 
-.content input:valid{
-	
-}
+
 
 .formInput{
+	display:block;
+	width:100%;
+	height:34px;
+	padding:6px 12px;
+	font-size:14px;
+	line-height:1.42857143;
+	color:#555;
+	background-color:#fff;
+	background-image:none;
+	border:1px solid #ccc;
+	border-radius:4px;
+	-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 	box-shadow: 0 0 0 3px rgba(50, 205, 50, 0.0);
     transition: all 800ms ease-in-out;
 }
@@ -138,7 +179,7 @@ Main Content
 }
 
 .inputInvalid{
-	box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5)
+	box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.7)
 }
 
 /*------------------------

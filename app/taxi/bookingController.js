@@ -172,8 +172,9 @@ angular.module("taxiModule").controller("bookingController", function ($scope, $
                 $scope.errorMessage;
             });
     };
-	//This function is used to get the maximum amount of passengers which can fit in the selected taxi
-	$scope.maxPassengers = function (vehicleId) {
+	//This function is used to get the maximum amount of passengers which can fi
+	$scope.maxPassengers = function () {		
+		vehicleId = $scope.addBookingVehicleId
 		$http.get("http://webteach_net.hallam.shu.ac.uk/acesjas/api/vehicle/" + vehicleId)
 		.success(function(response){
 			$scope.maxTaxiCapacity = response.Capacity;

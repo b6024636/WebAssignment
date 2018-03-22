@@ -3,7 +3,6 @@ angular.module("taxiModule").controller("pageController", function ($scope, $htt
 	$scope.loginButton = true;
 	$scope.logoutButton = true;
 	$scope.defaultMessage = true;
-	$scope.showHomeNavigation = true;
     //Displays the main navigation element broadcasts a message to other controllers to hide their content
     $scope.returnHome = function () {
 		
@@ -12,12 +11,15 @@ angular.module("taxiModule").controller("pageController", function ($scope, $htt
 			$scope.showHomeNavigation = true;
 			$scope.loginForm = true;	
 			$scope.currentUser = true;
+			$scope.quickNav = true;
 		}        
     };
 	
 	
     //Hides main navigation, shows the current taxis
     $scope.viewTaxis = function () {
+		$scope.returnHome();
+		$scope.currentUser = false;
         $scope.showHomeNavigation = false;
         //Broadcast used to send message call taxis1/2 depending on role		
 		if($scope.role == 2){
@@ -29,6 +31,8 @@ angular.module("taxiModule").controller("pageController", function ($scope, $htt
     };
 
     $scope.viewBookings = function () {
+		$scope.returnHome();
+		$scope.currentUser = false;
         $scope.showHomeNavigation = false;
         if($scope.role == 2){
 			$scope.$broadcast('callBookings2');			
@@ -38,6 +42,8 @@ angular.module("taxiModule").controller("pageController", function ($scope, $htt
     };
 
     $scope.viewRoutes = function () {
+		$scope.returnHome();
+		$scope.currentUser = false;
         $scope.showHomeNavigation = false;
         if($scope.role == 2){
 			$scope.$broadcast('callRoutes2');			
